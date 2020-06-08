@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
-public class TestController {
+public class UserController {
 
     @Autowired
     private IUserService userService;
@@ -19,8 +19,8 @@ public class TestController {
     }
 
     @PostMapping
-    public Result add(@RequestBody UserForm userForm){
-        return Result.success(userService.add(userForm));
+    public Result add(@RequestBody UserForm form){
+        return Result.success(userService.add(form));
     }
 
     @PutMapping(value = "/{userId}/{isDisabled}")
