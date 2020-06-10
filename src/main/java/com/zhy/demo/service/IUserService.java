@@ -11,4 +11,6 @@ public interface IUserService {
     Integer add(UserForm form);
 
     Boolean updateDisable(Integer userId, Integer isDisabled);
+
+    User getUserByUserName(String username);
 }

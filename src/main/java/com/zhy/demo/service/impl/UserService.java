@@ -1,5 +1,6 @@
 package com.zhy.demo.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhy.demo.dao.UserMapper;
 import com.zhy.demo.entity.form.UserForm;
@@ -31,6 +32,13 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
             flag = this.updateById(user);
         }
         return flag;
+    }
+
+    @Override
+    public User getUserByUserName(String username) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("username",username);
+        return this.baseMapper.selectOne(wrapper);
     }
 
 }
