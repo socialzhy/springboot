@@ -27,4 +27,9 @@ public class UserController {
     public Result update(@PathVariable Integer userId, @PathVariable Integer isDisabled){
         return Result.success(userService.updateDisable(userId,isDisabled));
     }
+
+    @PostMapping("/loginSuccess")
+    public Result success(){
+        return Result.success("xxxx");
+    }
 }
