@@ -1,6 +1,7 @@
 package com.zhy.demo.entity.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.zhy.demo.exception.ErrorType;
 import lombok.Getter;
 
 import java.time.Instant;
@@ -42,5 +43,24 @@ public class Result<T> {
 
     public static Result success(Object data) {
         return new Result<>(SUCCESSFUL_CODE, SUCCESSFUL_MESG, data);
+    }
+
+    public Result(ErrorType errorType) {
+        this.code = errorType.getCode();
+        this.mesg = errorType.getMesg();
+        this.time = ZonedDateTime.now().toInstant();
+    }
+
+    public Result(ErrorType errorType, T data) {
+        this(errorType);
+        this.data = data;
+    }
+
+    public static Result fail(ErrorType errorType, Object data) {
+        return new Result<>(errorType, data);
+    }
+
+    public static Result fail(ErrorType errorType) {
+        return Result.fail(errorType, null);
     }
 }

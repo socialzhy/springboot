@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -37,12 +38,15 @@ public class WebServerSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/user/{userId}").hasAuthority("System")
+                //.antMatchers("/user/{userId}").hasAuthority("System2")
                 .antMatchers("/actuator/**").permitAll()// actuator请求放过
                 //.antMatchers("/sms/**").permitAll()
                 .anyRequest().authenticated()// 其他请求全部拦截
                 .and()
                 .formLogin().permitAll()//允许表单登录
-                .successForwardUrl("/user/loginSuccess");
+                .successForwardUrl("/user/loginSuccess")
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);//设置session策略
     }
 }
