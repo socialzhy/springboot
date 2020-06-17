@@ -5,6 +5,7 @@ import com.zhy.demo.entity.form.UserForm;
 import com.zhy.demo.entity.vo.Result;
 import com.zhy.demo.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +34,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/{userId}/{isDisabled}")
+    @PreAuthorize("System")
     public Result update(@PathVariable Integer userId, @PathVariable Integer isDisabled){
         return Result.success(userService.updateDisable(userId,isDisabled));
     }

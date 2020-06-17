@@ -17,6 +17,7 @@ import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -45,18 +46,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     TokenStore tokenStore;
-
-//内存模式
-//    @Override
-//    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-//        clients
-//                .inMemory()
-//                .withClient("client")
-//                .secret(passwordEncoder.encode("secret"))
-//                .authorizedGrantTypes("authorization_code")
-//                .scopes("scopes")
-//                .redirectUris("http://www.baidu.com");
-//    }
 
 
 
@@ -109,6 +98,20 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
     @Bean
     public AuthorizationCodeServices authorizationCodeServices() { //设置授权码模式的授权码如何存取，暂时采用内存方式
-        return new InMemoryAuthorizationCodeServices();
+        return new JdbcAuthorizationCodeServices(dataSource);
     }
+
+
+    //内存模式
+    //    @Override
+    //    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+    //        clients
+    //                .inMemory()
+    //                .withClient("client")
+    //                .secret(passwordEncoder.encode("secret"))
+    //                .authorizedGrantTypes("authorization_code")
+    //                .scopes("scopes")
+    //                .redirectUris("http://www.baidu.com");
+    //    }
+
 }
