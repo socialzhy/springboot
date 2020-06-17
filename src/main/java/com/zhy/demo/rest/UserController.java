@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/{userId}/{isDisabled}")
-    @PreAuthorize("System")
+    @PreAuthorize("hasAuthority('user')")
     public Result update(@PathVariable Integer userId, @PathVariable Integer isDisabled){
         return Result.success(userService.updateDisable(userId,isDisabled));
     }
